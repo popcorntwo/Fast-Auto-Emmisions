@@ -1,7 +1,3 @@
-#plug in hybrids 42-46% higher effeciency (ICCT)
-#approx 4.2% less emmiosins
-#diesel get 25% more gallon/mi
-
 ###
 #average grams per kilometer
 #compact: 216.6
