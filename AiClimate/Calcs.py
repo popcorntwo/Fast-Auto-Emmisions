@@ -10,7 +10,7 @@
 #subcompact: 246.4
 #small SUV: 236.3
 #standard SUV: 304.8
-#two seaters: 277.6'
+#two seaters: 277.6
 #van:388.3
 ###
 
@@ -30,7 +30,7 @@ class Car:
             "diesel":self.diesel,
             "co2PerMile":self.co2_per_mile
         }
-        with open("sample.json", "w") as outfile:
+        with open("MyCar.json", "w") as outfile:
             json.dump(values, outfile, indent= 3)
 
     def calculte_co2_per_mile(self, type: str,hybrid: bool,gas: bool,diesel: bool):
@@ -46,11 +46,11 @@ class Car:
         elif type == "smallSUV": co2_per_km += 236.3
         elif type == "standardSUV": co2_per_km += 304.8
         elif type == "twoseaters": co2_per_km += 277.
-        elif type == "twoseaters": co2_per_km += 388.3
+        elif type == "fullsizeVan": co2_per_km += 388.3
         # returns co2/mi
         co2_per_mi = co2_per_km / 0.6213711922
         if diesel: co2_per_mi/.9
         if hybrid: co2_per_mi/.65
         return co2_per_mi
 
-car = Car("compact",)
+car = Car("compact")
