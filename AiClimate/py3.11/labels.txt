@@ -1,0 +1,9 @@
+0 TwoSeater
+1 Compact
+2 CompactSUV
+3 FullsizeVan
+4 Midsize
+5 MiniVan
+6 PickupTruck
+7 StationWagon
+8 SUV
