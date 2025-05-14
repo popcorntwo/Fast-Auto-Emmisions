@@ -13,30 +13,11 @@
 #two seaters: 277.6
 #van:388.3
 ###
+import os
 
-import json
+write = ""
 
-CO2_per_mile = None
-
-#for the image insert makes a Car that is gas and not a ev
-def get_car_report(output_findImage):
-    return
-
-# def write_to_json():
-#     values= {
-#         "Type": type,
-#         "hybrid": hybrid,
-#         "gas": gas,
-#         "diesel": diesel,
-#         "co2PerMile": co2_per_mile
-#     }
-    
-#     with open("MyCar.json", "w") as outfile:
-#         json.dump(values, outfile, indent= 3)
-
-type: str
-
-def calculte_co2_per_mile(type:str ):
+def calculte_co2_per_kilometer(type:str ):
     co2_per_km:float = 0.0
     if type == "Compact": co2_per_km += 216.6
     elif type == "Fullsize": co2_per_km += 263.2
@@ -52,11 +33,14 @@ def calculte_co2_per_mile(type:str ):
     elif type == "FullsizeVan": co2_per_km += 388.3
     print(co2_per_km)
     return co2_per_km
-    
 
-
-def co2Report():
-    write = "-----------------------\n"
-    write+= "- CO2 EMMISION REPORT -\n"
-    write+= "-----------------------\n"
-    
+def report(milage, co2_per_km):
+    total_co2_grams = int(float(milage) * float(co2_per_km))
+    total_co2_m_tons =int(total_co2_grams * (10**-6))
+    write = r"\n\n\n"
+    write += r"------------------\n"
+    write += r"emmision report\n"
+    write += r"------------------\n"
+    write += r"total emmisions in tons is" + str(total_co2_m_tons) + r"\n"
+    write += r"total emmisions in grams is " + str(total_co2_grams) +r"\n"
+    return write    
