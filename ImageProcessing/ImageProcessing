@@ -1,0 +1,107 @@
+from PIL import Image, ImageFilter, ImageTk
+from rembg import remove
+import tkinter as tk
+import os
+from tkinter import PhotoImage
+import multiprocessing as mp
+
+
+#imgpath = r"C:\Users\popko\OneDrive\Documents\GitHub\AiClimate\AiClimate\Basket\download (6).jpg"
+# original = Image.open(imgpath).convert("RGB").resize((200, 200))
+# modified = remove(original).convert("L").filter(ImageFilter.FIND_EDGES).resize((200, 200))
+path_to_Out = os.path.join(os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__))),"Out")
+path_to_In = os.path.join(os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__))),"In")
+path_to_Compact = os.path.join(path_to_Out,("Compact"))
+path_to_CompactSUV = os.path.join(path_to_Out,("CompactSUV"))
+path_to_FullsizeVan = os.path.join(path_to_Out,("FullsizeVan"))
+path_to_MiniVan = os.path.join(path_to_Out,("MiniVan"))
+path_to_PickupTruck = os.path.join(path_to_Out,("PickupTruck"))
+path_to_StationWagon = os.path.join(path_to_Out,("StationWagon"))
+path_to_SUV = os.path.join(path_to_Out,("SUV"))
+path_to_TwoSeater = os.path.join(path_to_Out,("TwoSeater"))
+path_to_Midsize = os.path.join(path_to_Out, "Midsize")
+global current_image_count
+global current_image
+current_image_count = 0
+window = tk.Tk()
+current_image = os.path.join(path_to_In,os.listdir(path=path_to_In)[current_image_count])
+
+print(current_image)
+
+def process_image(img_path, folder_path):
+    original = Image.open(img_path).convert("RGB").resize((200, 200))
+    modified = remove(original).convert("L").filter(ImageFilter.FIND_EDGES).resize((200, 200))
+    modified.save(folder_path)
+    next_image()
+
+def next_image():
+    current_image_count+=1
+    current_image = os.join(path_to_In,os.listdir()[current_image_count])
+
+def sort_image(x):
+    if not (__name__ == '__main__'):
+        print("error")
+        return
+    if x == 1:
+        mp.Process(target=process_image, args=(current_image, path_to_TwoSeater)).start()
+    if x == 2:
+        mp.Process(target=process_image, args=(current_image, path_to_Compact)).start()
+    if x == 3:
+        mp.Process(target=process_image, args=(current_image, path_to_CompactSUV)).start()
+    if x == 4:
+        mp.Process(target=process_image, args=(current_image, path_to_FullsizeVan)).start()
+    if x == 5:
+        mp.Process(target=process_image, args=(current_image, path_to_Midsize)).start()
+    if x == 6:
+        mp.Process(target=process_image, args=(current_image, path_to_MiniVan)).start()
+    if x == 7:
+        mp.Process(target=process_image, args=(current_image, path_to_PickupTruck)).start()
+    if x == 8:
+        mp.Process(target=process_image, args=(current_image, path_to_StationWagon)).start()
+    if x == 9:
+        mp.Process(target=process_image, args=(current_image, path_to_SUV)).start()
+    if x == 0:
+        next_image()
+
+  
+# window.state()
+
+window.title("ImageProcessing")
+label = tk.Label(window, text = "buttons do as stated.", font=('Arial',18))
+label.pack()
+
+images_frame = tk.Frame(window)
+
+current_image = Image.open(current_image)
+tkinter_compatabile_image = ImageTk.PhotoImage(current_image)
+
+image_label = tk.Label(window, image = tkinter_compatabile_image)
+image_label.pack()
+
+btn_matrix_frame = tk.Frame(window)
+btn_matrix_frame.pack(fill= "both" ,expand=True)
+
+btn1 = tk.Button( btn_matrix_frame, text="two Seater (sports car)", command= lambda: sort_image(1))
+btn1.grid(row=0, column=0, sticky= "we", padx= 10,)
+btn2 = tk.Button( btn_matrix_frame, text="compact", command=lambda: sort_image(2))
+btn2.grid(row=0, column=1, sticky= "we", padx= 10,)
+btn3 = tk.Button( btn_matrix_frame, text="Compact SUV", command=lambda: sort_image(3))
+btn3.grid(row=0, column=2, sticky= "we", padx= 10,)
+btn4 = tk.Button( btn_matrix_frame, text="FullsizeVan", command=lambda: sort_image(4))
+btn4.grid(row=1, column=0, sticky= "we", padx= 10,)
+btn5 = tk.Button( btn_matrix_frame, text="Mid size", command=lambda: sort_image(5))
+btn5.grid(row=1, column=1, sticky= "we", padx= 10,)
+btn6 = tk.Button( btn_matrix_frame, text="Minivan", command=lambda: sort_image(6))
+btn6.grid(row=1, column=2, sticky= "we", padx= 10,)
+btn7 = tk.Button( btn_matrix_frame, text="Pickup Truck", command=lambda: sort_image(7))
+btn7.grid(row=2, column=0, sticky= "we", padx= 10,)
+btn8 = tk.Button( btn_matrix_frame, text="Station Wagon", command=lambda: sort_image(8))
+btn8.grid(row=2, column=1, sticky= "we", padx= 10,)
+btn9 = tk.Button( btn_matrix_frame, text="SUV", command=lambda: sort_image(0))
+btn9.grid(row=2, column=2, sticky= "we", padx= 10,)
+btn1 = tk.Button( btn_matrix_frame, text="Skip", command=next_image)
+btn1.grid(row=3, column=0, sticky= "news", columnspan=3)
+
+image_label.image = tkinter_compatabile_image
+
+window.mainloop()
